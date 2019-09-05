@@ -14,10 +14,8 @@ import java.util.List;
 
 public class BookmarketDaoImpl implements BookmarketDao {
     private Executor executor;
-    private static Connection connection;
 
     public BookmarketDaoImpl(Connection connection) {
-        BookmarketDaoImpl.connection = connection;
         this.executor = new Executor(connection);
     }
 
