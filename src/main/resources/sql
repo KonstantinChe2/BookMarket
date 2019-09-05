@@ -1,0 +1,37 @@
+CREATE TABLE `authors` (
+  `authorid` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  PRIMARY KEY (`authorid`),
+  UNIQUE KEY `authorid_UNIQUE` (`authorid`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8
+
+CREATE TABLE `books` (
+  `isbn` varchar(45) NOT NULL,
+  `title` varchar(45) NOT NULL,
+  `price` int(11) NOT NULL,
+  `publisher_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`isbn`),
+  UNIQUE KEY `isbn_UNIQUE` (`isbn`),
+  KEY `publisher_link_idx` (`publisher_id`),
+  CONSTRAINT `publish_link` FOREIGN KEY (`publisher_id`) REFERENCES `publishers` (`publisher_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+CREATE TABLE `books_authors` (
+  `isbn` varchar(45) NOT NULL,
+  `authorid` int(11) NOT NULL,
+  PRIMARY KEY (`isbn`),
+  UNIQUE KEY `isbn_UNIQUE` (`isbn`),
+  KEY `author_link_idx` (`authorid`),
+  CONSTRAINT `author_link` FOREIGN KEY (`authorid`) REFERENCES `authors` (`authorid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `book_link` FOREIGN KEY (`isbn`) REFERENCES `books` (`isbn`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+CREATE TABLE `publishers` (
+  `publisher_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `url` varchar(45) NOT NULL,
+  PRIMARY KEY (`publisher_id`),
+  UNIQUE KEY `name_UNIQUE` (`name`),
+  UNIQUE KEY `url_UNIQUE` (`url`),
+  UNIQUE KEY `publisher_id_UNIQUE` (`publisher_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8
